@@ -1,5 +1,9 @@
 
-export const Home = () => {
+export const NotFound = () => {
     
-    return <div></div>
+    return(
+        <div>
+            NotFound
+        </div>
+    ) 
 }
