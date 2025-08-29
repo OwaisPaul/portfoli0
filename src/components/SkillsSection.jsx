@@ -1,74 +1,82 @@
-import { useState } from "react"
+import { useState } from "react";
 import { cn } from "../lib/utils";
 
+// Import icons from react-icons (install with: npm install react-icons)
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGitAlt } from "react-icons/fa";
+import { SiTailwindcss, SiExpress, SiMongodb, SiVercel, SiPostman } from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
+
+
+
 const skills = [
-    //Frontend 
-    {name: "HTML/CSS", level: 95, category: "frontend"},
-    {name: "JavaScript", level:90, category: "frontend"},
-    {name: "React", level: 90, category: "frontend"},
-    {name: "Tailwind CSS", level: 75, category: "frontend"},
-    
-    //Backend 
-    {name: "Node.js", level: 80, category: "backend"},
-    {name: "Express", level: 75, category: "backend"},
-    {name: "MongoDB", level: 70, category: "backend"},
+  // Frontend
+  { name: "HTML5", icon: <FaHtml5 className="text-orange-600" />, category: "frontend" },
+  { name: "CSS3", icon: <FaCss3Alt className="text-blue-600" />, category: "frontend" },
+  { name: "JavaScript", icon: <FaJs className="text-yellow-500" />, category: "frontend" },
+  { name: "React", icon: <FaReact className="text-cyan-400" />, category: "frontend" },
+  { name: "Tailwind", icon: <SiTailwindcss className="text-sky-500" />, category: "frontend" },
 
-    //Tools
-    {name: "Git/GitHub", level: 80, category: "tools"},
-    {name: "VS Code", level: 90, category: "tools"},
-    {name: "Postman", level: 80, category: "tools"},
-]
+  // Backend
+  { name: "Node.js", icon: <FaNodeJs className="text-green-600" />, category: "backend" },
+  { name: "Express", icon: <SiExpress className="text-gray-800 dark:text-gray-200" />, category: "backend" },
+  { name: "MongoDB", icon: <SiMongodb className="text-green-500" />, category: "backend" },
 
-    const categories = ["all", "frontend", "backend", "tools"];
+  // Tools
+  { name: "Git/GitHub", icon: <FaGitAlt className="text-orange-500" />, category: "tools" },
+{ name: "VS Code", icon: <VscVscode className="text-blue-500" />, category: "tools" },
+
+
+  { name: "Postman", icon: <SiPostman className="text-orange-400" />, category: "tools" },
+  { name: "Vercel", icon: <SiVercel className="text-black dark:text-white" />, category: "tools" },
+];
+
+const categories = ["all", "frontend", "backend", "tools"];
 
 export const SkillsSection = () => {
-    const [activeCategory, setActiveCategory] = useState('all')
+  const [activeCategory, setActiveCategory] = useState("all");
 
-    const filteredSkills = skills.filter(
-        (skill) => activeCategory === "all" || skill.category === activeCategory
-    )
+  const filteredSkills = skills.filter(
+    (skill) => activeCategory === "all" || skill.category === activeCategory
+  );
 
-    return(
-        <section id="skills" className="py-24 px-4 relative bg-secondary/30">
-        <div className="container mx-auto max-w-5xl">
+  return (
+    <section id="skills" className="py-24 px-4 relative bg-secondary/30">
+      <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-        My <span className="text-primary"> Skills</span>
+          My <span className="text-primary">Skills</span>
         </h2>
-         
-         <div className="flex flex-wrap justify-center gap-4 mb-12">
-         {categories.map((category, key) => (
-            <button key={key} onClick={() => setActiveCategory(category)}
-            className={cn("px-5 py-2 rounded-full transition-colors duration-300 capitalize",
-                activeCategory === category ? "bg-primary text-primary-foreground" : "bg-secondary/70 text-foreground hover:bg-secondary"
-            )}>
-                {category}</button>
-         ))}
-         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredSkills.map((skill, key) => (
-        <div key={key}
-            className="bg-card p-6 rounded-lg shadow-xs card-hover">
-        <div className="text-left mb-4">
-        <h3 className="font-semibold text-lg">{skill.name}</h3>
-        </div>
-        <div 
-            className="w-full bg-secondary/50 h-2 rounded-full overflow-hidden">
-                <div 
-                className="bg-primary h-2 rounded-full origin-left animate-[grow_1.5s_ease-out]"
-                style={{ width: skill.level + "%" }} />
+        {/* Category Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {categories.map((category, key) => (
+            <button
+              key={key}
+              onClick={() => setActiveCategory(category)}
+              className={cn(
+                "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
+                activeCategory === category
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary/70 text-foreground hover:bg-secondary"
+              )}
+            >
+              {category}
+            </button>
+          ))}
         </div>
 
-        <div className="text-right mt-1">
-            <span className="text-sm text-muted-foreground">
-                {skill.level}
-            </span>
+        {/* Skills Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+          {filteredSkills.map((skill, key) => (
+            <div
+              key={key}
+              className="flex flex-col items-center justify-center bg-card p-6 rounded-lg shadow-xs hover:shadow-md transition-transform hover:scale-105"
+            >
+              <div className="text-6xl mb-4">{skill.icon}</div>
+              <p className="font-medium text-center">{skill.name}</p>
             </div>
-            </div>
-        ))}
+          ))}
         </div>
-        </div>
-
-        </section>
-        )
-        }
+      </div>
+    </section>
+  );
+};
