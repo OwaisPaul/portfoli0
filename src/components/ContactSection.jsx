@@ -1,7 +1,8 @@
-import { Instagram, Linkedin, Mail, MapPin, Phone, Send, Twitter} from "lucide-react"
+import { Github,Linkedin, Mail, MapPin, Phone, Send } from "lucide-react"
 import { cn } from "../lib/utils"
 import { useToast } from "../hooks/use-toast"
 import { useState } from "react";
+import emailjs from 'emailjs-com'
 
 
 export  const ContactSection = () => {
@@ -13,6 +14,34 @@ export  const ContactSection = () => {
         e.preventDefault()
 
         setIsSubmitting(true);
+
+        emailjs
+           .sendForm(
+            "service_j4njipe", 
+            "template_cih49cc",
+            e.target,
+            "1vb0R1pZq-xbyDFUP"
+           )
+           .then(
+            (result) => {
+                console.log(result);
+                
+                toast({
+                    title: "message sent!",
+                    description: "Thank you for your message. I'll get back to you soon.",
+                });
+                setIsSubmitting(false);
+                e.target.reset();
+            },
+            (error) => {
+                console.log(error)
+                toast({
+                    title:"Error sending message",
+                    description: "Something went wrong. Please try again later.",
+                })
+                setIsSubmitting(false)
+            }
+           )
 
         setTimeout(() => {
             toast({
@@ -36,6 +65,7 @@ export  const ContactSection = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {/*Left side: contact info */}
                 <div className="space-y-8">
                     <h3 className="text-2xl font-semibold mb-6">
                         {" "}
@@ -83,18 +113,16 @@ export  const ContactSection = () => {
                     <div className="pt-8">
                         <h4 className="font-medium mb-4"> Connect With Me</h4>
                         <div className="flex space-x-4 justify-center">
-                            <a href="#" target="_blank"> 
+                            <a href="www.linkedin.com/in/owaisso" target="_blank"> 
                                 <Linkedin />
                             </a>
-                            <a href="#" target="_blank">
-                                <Instagram />
-                            </a>
-                            <a href="#" target="_blank">
-                                <Twitter />
+                            <a href="https://github.com/OwaisPaul" target="_blank">
+                                <Github />
                             </a>
                         </div>
                     </div>
                 </div>
+                    {/* Right side: form */}
 
                 <div className="bg-card p-8 rounded-lg shadow-xs">
                     <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
